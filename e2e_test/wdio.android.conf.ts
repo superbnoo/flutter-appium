@@ -57,7 +57,8 @@ export const config: WebdriverIO.Config = {
         'appium:deviceName': 'Medium_Phone_API_36',
         'appium:avd': 'Medium_Phone_API_36',
         'appium:automationName': 'UiAutomator2',
-        'appium:app': '/Users/vutr/00.cursor-projects/flutter/flutter_appium/build/app/outputs/flutter-apk/app-debug.apk'
+        'appium:app': '/Users/vutr/00.cursor-projects/flutter/flutter_appium/build/app/outputs/flutter-apk/app-debug.apk',
+        'appium:enforceAppInstall': true
     }],
 
     //
