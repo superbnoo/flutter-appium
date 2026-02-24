@@ -1,6 +1,6 @@
 # flutter_appium
 
-A new Flutter project.
+A new Flutter project - original counter starter app auto created and unchanged
 
 ## Getting Started
 
@@ -15,3 +15,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Add Appium test in folder `e2e-test`
++ Mainly add the Appium config and setup in `e2e-test` folder
++ Only make a small change in `lib/main.dart` to add test-id
