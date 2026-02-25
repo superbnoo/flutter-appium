@@ -1,7 +1,7 @@
 ### iOS
 + Build:
 ```
-flutter build ios --simulator --debug
+flutter build ios --simulator --debug --target lib/main_test.dart # instead of default lib/main.dart
 ```
 > ✓ Built build/ios/iphonesimulator/Runner.app
 
@@ -18,7 +18,7 @@ npm appium --address 0.0.0.0 --port 4723
 ### Android
 + Build:
 ```
-flutter build apk --debug
+flutter build apk --debug --target lib/main_test.dart
 ```
 > ✓ Built build/app/outputs/flutter-apk/app-debug.apk
 
