@@ -39,3 +39,29 @@ npm i -D @wdio/cli
 npm i -D appium-flutter-finder appium-flutter-driver
 npm i -D appium
 ```
+
+---
+
+## Python version
+
+### Setup
+```
+cd e2e_test
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Run tests (prerequisite: appium server has started)
+
++ iOS:
+```
+cd e2e_test && pytest test_main.py --platform=ios -v -s
+```
+
++ Android:
+```
+cd e2e_test && pytest test_main.py --platform=android -v -s
+```
+
+> `-v` enables verbose output, `-s` prints page source from the dump test.
