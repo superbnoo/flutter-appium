@@ -8,6 +8,9 @@ PROJECT_ROOT = "/Users/vutr/00.cursor-projects/flutter/flutter_appium"
 IOS_APP = f"{PROJECT_ROOT}/build/ios/iphonesimulator/Runner.app"
 ANDROID_APP = f"{PROJECT_ROOT}/build/app/outputs/flutter-apk/app-debug.apk"
 
+IOS_BUNDLE_ID = "com.example.flutterAppium"
+ANDROID_PACKAGE = "com.example.flutter_appium"
+
 APPIUM_SERVER = "http://127.0.0.1:4723"
 
 
@@ -48,3 +51,12 @@ def driver(platform):
     drv = webdriver.Remote(APPIUM_SERVER, options=options)
     yield drv
     drv.quit()
+
+
+@pytest.fixture(autouse=True)
+def restart_app(driver, platform):
+    """Force-quit and relaunch the app before every test."""
+    app_id = IOS_BUNDLE_ID if platform == "ios" else ANDROID_PACKAGE
+    driver.terminate_app(app_id)
+    driver.activate_app(app_id)
+    yield
