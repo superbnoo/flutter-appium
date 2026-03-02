@@ -8,37 +8,21 @@ from selenium.webdriver.support import expected_conditions as EC
 class TestCounterApp:
     """Mirrors the TypeScript test: e2e_test/test/specs/main-test.e2e.ts"""
 
-    def test_increment_counter(self, driver, platform):
+    def test_increment_counter(self, driver):
         """Should increment the counter when tapping the plus button."""
         time.sleep(3)
 
         wait = WebDriverWait(driver, 10)
 
-        # Find the counter element using platform-specific selectors
-        # Android: content-desc attribute, matched via UiAutomator
-        # iOS: label attribute, matched via predicate string
-        if platform == "ios":
-            counter = wait.until(
-                EC.presence_of_element_located(
-                    (AppiumBy.IOS_PREDICATE, 'label CONTAINS "counter:"')
-                )
+        # Flutter's semanticsLabel maps to accessibility id on both iOS and Android
+        counter = wait.until(
+            EC.presence_of_element_located(
+                (AppiumBy.ACCESSIBILITY_ID, "counter: 0")
             )
-        else:
-            counter = wait.until(
-                EC.presence_of_element_located(
-                    (
-                        AppiumBy.ANDROID_UIAUTOMATOR,
-                        'new UiSelector().descriptionContains("counter:")',
-                    )
-                )
-            )
+        )
+        assert counter is not None
 
-        # On Android the accessibility attribute is 'content-desc', on iOS it's 'label'
-        label_attr = "label" if platform == "ios" else "content-desc"
-        assert counter.get_attribute(label_attr) == "counter: 0"
-
-        # FAB tooltip sets the accessibility label to "Increment" on both platforms
-        # The ACCESSIBILITY_ID selector matches on both Android and iOS
+        # Tap the FAB — tooltip "Increment" is the accessibility id on both platforms
         button = wait.until(
             EC.presence_of_element_located(
                 (AppiumBy.ACCESSIBILITY_ID, "Increment")
@@ -46,12 +30,12 @@ class TestCounterApp:
         )
         button.click()
 
-        # Verify counter incremented
-        def counter_is_one(_):
-            return counter.get_attribute(label_attr) == "counter: 1"
-
-        WebDriverWait(driver, 5).until(counter_is_one)
-        assert counter.get_attribute(label_attr) == "counter: 1"
+        # Verify counter incremented — wait for the new accessibility id to appear
+        WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located(
+                (AppiumBy.ACCESSIBILITY_ID, "counter: 1")
+            )
+        )
 
     def test_dump_page_source(self, driver):
         """Dump page source to see available elements."""
